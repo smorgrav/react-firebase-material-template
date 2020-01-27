@@ -2,13 +2,13 @@
   "name": "react-firebase-material-template",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "firebase deploy" 
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -26,13 +26,6 @@
     ]
   },
   "devDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0",
-    "firebase": "^6.2.4",
-    "firebase-tools": "^7.0.2",
-    "react-firebase-hooks": "^2.1.1",
-    "react-firebaseui": "^4.1.0",
     "@material-ui/core": "^4.2.0",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/pickers": "^3.2.4",
@@ -40,7 +33,14 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "firebase": "^6.2.4",
+    "firebase-tools": "^7.12.1",
     "formik": "^2.0.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-firebase-hooks": "^2.1.1",
+    "react-firebaseui": "^4.1.0",
+    "react-scripts": "3.3.0",
     "yup": "^0.28.0"
   }
 }

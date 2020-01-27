@@ -11,9 +11,28 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: yarn install, build, and test
-      run: |
-        yarn
-        yarn test
-      env:
-        CI: true
+    - name: Install
+      run: yarn install
+    - name: Build
+      run: yarn build
+    - name: Test
+      run: yarn test
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'master')
+    needs: build
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+      - name: Deploy to Firebase
+        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --only hosting --non-interactive
