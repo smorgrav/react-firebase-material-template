@@ -7,16 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Setup Node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
     - name: Install
-      run: yarn install
-    - name: Build
-      run: yarn build
+      uses: ianwalter/puppeteer@v2.0.0
+      with:
+        yarn
     - name: Test
-      run: yarn test
+      uses: ianwalter/puppeteer@v2.0.0
+      with:
+        yarn test
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
         with:

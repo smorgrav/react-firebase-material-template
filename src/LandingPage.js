@@ -1,18 +1,21 @@
 import React, {useContext, useState} from 'react';
-import {AuthContext, SignIn} from "./AuthContext";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import logo from "./logo.svg";
-import {useTheme} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
+import logo from "./logo.svg";
+import {DrawerContext} from "./Drawer";
+import {ThemeContext} from "./Theme";
+import {AuthContext, SignIn} from "./Auth";
+import {useSnackbar} from "notistack";
 
 const LandingPage = ({}) => {
   const auth = useContext(AuthContext);
-  const theme = useTheme();
-  const [show, setShow] = useState("na");
+  const drawer = useContext(DrawerContext);
+  const theme = useContext(ThemeContext);
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
-  console.log("User: %o", auth.user);
+  const [show, setShow] = useState("na");
 
   return (
     <>
@@ -36,13 +39,24 @@ const LandingPage = ({}) => {
           </Grid>
           <Grid container spacing={3}>
             <Grid item xs>
-              <Button>TOGGLE LEFT DRAWER</Button>
+              <Button onClick={drawer.toggleDrawer('left')}>TOGGLE LEFT DRAWER</Button>
             </Grid>
             <Grid item xs>
-              <Button>TOGGLE RIGHT DRAWER</Button>
+              <Button onClick={drawer.toggleDrawer('right')}>TOGGLE RIGHT DRAWER</Button>
             </Grid>
             <Grid item xs>
-              <Button>TOGGLE THEME</Button>
+              <Button onClick={() => theme.toggle()}>TOGGLE THEME</Button>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs>
+              <Button onClick={() => {enqueueSnackbar("A message")}}>Add snackbar</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={() => {closeSnackbar()}}>Close snackbasr</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={() => {enqueueSnackbar("A warning", {variant: 'warning'})}}>Add warning</Button>
             </Grid>
           </Grid>
         </Paper>
