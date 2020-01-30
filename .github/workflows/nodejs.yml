@@ -10,11 +10,11 @@ jobs:
     - name: Install
       uses: ianwalter/puppeteer@v2.0.0
       with:
-        yarn
+        args: yarn
     - name: Test
       uses: ianwalter/puppeteer@v2.0.0
       with:
-        yarn test
+        args: yarn test
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:
