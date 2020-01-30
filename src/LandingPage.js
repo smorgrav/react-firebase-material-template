@@ -3,13 +3,13 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import logo from "./logo.svg";
 import {DrawerContext} from "./Drawer";
 import {ThemeContext} from "./Theme";
 import {AuthContext, SignIn} from "./Auth";
 import {useSnackbar} from "notistack";
+import {UrlParamTags} from "./UrlParamTags";
 
-const LandingPage = ({}) => {
+const LandingPage = () => {
   const auth = useContext(AuthContext);
   const drawer = useContext(DrawerContext);
   const theme = useContext(ThemeContext);
@@ -21,7 +21,7 @@ const LandingPage = ({}) => {
     <>
       <Container maxWidth="sm" style={{textAlign: 'center'}}>
         <h2>Welcome {auth.user ? auth.user.displayName : "stranger!"}</h2>
-        <img src={logo} alt="logo" style={{width: '300px', height: '300px'}}/>
+        <UrlParamTags />
         <Paper>
           <Grid container spacing={3}>
             <Grid item xs>

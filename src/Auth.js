@@ -13,6 +13,7 @@ import firebase from "firebase/app";
 import 'firebase/auth';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {StyledFirebaseAuth} from "react-firebaseui";
+import {useSnackbar} from "notistack";
 
 // Init firebase
 firebase.initializeApp(JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG));
@@ -38,6 +39,15 @@ const AuthContext = React.createContext("");
 // Default provider implementation
 const FirebaseProvider = ({children}) => {
   const [user, loading, error] = useAuthState(firebase.auth());
+  const {enqueueSnackbar} = useSnackbar();
+
+  if (error) {
+    enqueueSnackbar(error);
+  }
+
+  if (loading) {
+    console.log("loading")
+  }
 
   const authenticated = () => {
     return !!user;
