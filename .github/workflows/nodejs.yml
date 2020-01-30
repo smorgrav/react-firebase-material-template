@@ -11,26 +11,22 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ianwalter/puppeteer:2.0.0
     steps:
     - name: Checkout Code
       uses: actions/checkout@v1
-    - name: Yarn Install
-      uses: ianwalter/puppeteer@v2.0.0
-      with:
-        args: yarn install
-    - name: Yarn Build
-      uses: ianwalter/puppeteer@v2.0.0
-      with:
-        args: yarn build
+    - name: Install and Buil
+      run: |
+        yarn install
+        yarn build
+    - name: Test
+      run: yarn test
     - name: Yarn Test
-      uses: ianwalter/puppeteer@v2.0.0
-      with:
-        entrypoint: /bin/sh
-        args: |
-          -c "\
-          yarn start & \
-          sleep 120 &&
-          yarn test"
+      run: |
+        yarn start &
+        sleep 120
+        yarn test
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:

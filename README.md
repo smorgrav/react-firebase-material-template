@@ -13,4 +13,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * Error boundary applied
 * URL to tags component
 * Authentication context backed by firebase
+* Authentication flows
+   * Sign up
+   * Sign up
+   * Invite by email
  
