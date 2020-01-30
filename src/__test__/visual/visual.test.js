@@ -40,6 +40,7 @@ describe('visual-sitemap', () => {
 
   beforeAll(async () => {
     await differencify.launchBrowser({
+      executablePath: 'google-chrome-unstable',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
   });
