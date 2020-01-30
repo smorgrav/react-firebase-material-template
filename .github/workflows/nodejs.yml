@@ -1,6 +1,9 @@
-name: Node CI
+name: Continuous Integration
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 env:
   CI: true
@@ -9,20 +12,38 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Install
+    - name: Checkout Code
+      uses: actions/checkout@v1
+    - name: Display build environment
+      run: printenv
+    - name: Yarn Install
       uses: ianwalter/puppeteer@v2.0.0
       with:
-        args: yarn
-    - name: Test
+        args: yarn install
+    - name: Yarn Test
       uses: ianwalter/puppeteer@v2.0.0
       with:
-        args: echo hello
+        entrypoint: /bin/sh
+        args: |
+          -c "\
+          yarn build && \
+          echo hei"
+    - name: List Container
+      uses: ianwalter/puppeteer@v2.0.0
+      with:
+        entrypoint: /bin/sh
+        args: |
+          -c "\
+          ls -al"
+    - name: List Host
+      run: |
+          ls -al
+          printenv
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:
-        name: dist
-        path: dist
+        name: build
+        path: build
 
   deploy:
     runs-on: ubuntu-latest
