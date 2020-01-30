@@ -20,8 +20,6 @@ jobs:
       run: |
         yarn install
         yarn build
-    - name: Test
-      run: yarn test
     - name: Yarn Test
       run: |
         yarn start &
