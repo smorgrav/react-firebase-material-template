@@ -28,22 +28,16 @@
   "devDependencies": {
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
-    "@material-ui/pickers": "^3.2.10",
     "@material-ui/lab": "^4.0.0-alpha.40",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@material-ui/pickers": "^3.2.10",
     "differencify": "^1.5.4",
     "firebase": "^6.2.4",
-    "firebase-tools": "^7.12.1",
-    "formik": "^2.0.3",
     "notistack": "^0.9.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-firebase-hooks": "^2.1.1",
     "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0",
-    "yup": "^0.28.0"
+    "react-scripts": "3.3.0"
   }
 }
