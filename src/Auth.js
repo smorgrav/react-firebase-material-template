@@ -11,14 +11,27 @@
 import * as React from "react";
 import firebase from "firebase/app";
 import 'firebase/auth';
+import 'firebase/firestore';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {StyledFirebaseAuth} from "react-firebaseui";
 import {useSnackbar} from "notistack";
 
 // Init firebase
-firebase.initializeApp(JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG));
+const app = firebase.initializeApp(JSON.parse(process.env.REACT_APP_FIREBASE));
 
-console.log("Firebase auth: %o", firebase.auth);
+// Use emulator if not production (TODO only if testing really or if certain env is set)
+if (process.env.NODE_ENV !== "production" ) {
+  const db = app.firestore();
+  db.settings({
+    host: "localhost:8080",
+    ssl: false
+  });
+
+  db.collection("test").doc("1").set({
+    name: "Number one",
+    title: "Chief"
+  })
+}
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -61,6 +74,7 @@ const FirebaseProvider = ({children}) => {
     <AuthContext.Provider value={{
       authenticated,
       user,
+      firestore: app.firestore(),
       auth: firebase.auth,
       signOut,
     }}>
