@@ -14,7 +14,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {StyledFirebaseAuth} from "react-firebaseui";
-import {useSnackbar} from "notistack";
+import {warningMessage} from "./Messages";
 
 // Init firebase
 const app = firebase.initializeApp(JSON.parse(process.env.REACT_APP_FIREBASE));
@@ -47,15 +47,14 @@ const uiConfig = {
 };
 
 // The context to to make the promises in the header
-const AuthContext = React.createContext("");
+const FirebaseContext = React.createContext("");
 
 // Default provider implementation
 const FirebaseProvider = ({children}) => {
   const [user, loading, error] = useAuthState(firebase.auth());
-  const {enqueueSnackbar} = useSnackbar();
 
   if (error) {
-    enqueueSnackbar(error);
+    warningMessage(error);
   }
 
   if (loading) {
@@ -71,15 +70,15 @@ const FirebaseProvider = ({children}) => {
   };
 
   return (
-    <AuthContext.Provider value={{
+    <FirebaseContext.Provider value={{
       authenticated,
       user,
-      firestore: app.firestore(),
+      db: app.firestore(),
       auth: firebase.auth,
       signOut,
     }}>
       {children}
-    </AuthContext.Provider>
+    </FirebaseContext.Provider>
   )
 };
 
@@ -87,4 +86,4 @@ const SignIn = () => {
   return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
 };
 
-export {AuthContext, FirebaseProvider, SignIn}
+export {FirebaseContext, FirebaseProvider, SignIn}

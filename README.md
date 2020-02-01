@@ -17,4 +17,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
    * Sign up
    * Sign up
    * Invite by email
+   
+## Testing
+### Unit testing
+
+### Heisenberg testing
+
+docker run -ti --rm -p 3000:3000 --name console --entrypoint /bin/sh -v ~/dev/react-firebase-material-template:/app -w /app ianwalter/puppeteer:2.0.0 
+      
  

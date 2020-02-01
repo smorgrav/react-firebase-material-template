@@ -4,11 +4,12 @@
   "private": true,
   "dependencies": {},
   "scripts": {
-    "start": "react-scripts start",
-    "build": "CI=true; react-scripts build",
-    "test": "CI=true; react-scripts test",
-    "testci": "CI=true; react-scripts test --ci",
-    "deploy": "firebase deploy"
+    "prod": "REACT_APP_BACKEND=prod react-scripts start",
+    "dev": "REACT_APP_BACKEND=dev react-scripts start",
+    "local": "firebase emulators:start & sleep 10 && REACT_APP_BACKEND=local react-scripts start",
+    "build": "react-scripts build",
+    "test": "CI=true react-scripts test --testPathIgnorePatterns=.*.visual.test.js$",
+    "visual": "CI=true react-scripts test visual.test.js --reporters default differencify-jest-reporter"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,13 +33,14 @@
     "@material-ui/lab": "^4.0.0-alpha.40",
     "@material-ui/pickers": "^3.2.10",
     "differencify": "^1.5.4",
+    "differencify-jest-reporter": "^0.0.3",
     "firebase": "^6.2.4",
-    "notistack": "^0.9.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-firebase-hooks": "^2.1.1",
     "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "react-toastify": "^5.5.0"
   }
 }

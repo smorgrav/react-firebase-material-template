@@ -5,22 +5,21 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import {DrawerContext} from "./Drawer";
 import {ThemeContext} from "./Theme";
-import {AuthContext, SignIn} from "./Auth";
-import {useSnackbar} from "notistack";
+import {FirebaseContext, SignIn} from "./Firebase";
 import {UrlParamTags} from "./UrlParamTags";
 import {useCollection} from 'react-firebase-hooks/firestore';
 import Box from "@material-ui/core/Box";
+import {infoMessage, successMessage, warningMessage} from "./Messages";
 
 const LandingPage = () => {
-  const auth = useContext(AuthContext);
+  const firebase = useContext(FirebaseContext);
   const drawer = useContext(DrawerContext);
   const theme = useContext(ThemeContext);
-  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
   const [show, setShow] = useState("na");
-  const [value, loading, error] = useCollection(auth.firestore.collection('test'));
+  const [value, loading, error] = useCollection(firebase.db.collection('test'));
 
   const addDoc = () => {
-    auth.firestore.collection("test").doc("2").set({
+    firebase.db.collection("test").doc("2").set({
       name: "Number Two",
       title: "Captain"
     })
@@ -35,18 +34,15 @@ const LandingPage = () => {
   return (
     <>
       <Container maxWidth="sm" style={{textAlign: 'center'}}>
-        <h2>Welcome {auth.user ? auth.user.displayName : "stranger!"}</h2>
+        <h2>Welcome {firebase.user ? firebase.user.displayName : "stranger!"}</h2>
         <UrlParamTags/>
         <Paper>
           <Grid container spacing={3}>
             <Grid item xs>
-              <Button onClick={() => {
-                setShow("signin")
-              }}
-              >SIGN IN</Button>
+              <Button onClick={() => {setShow("signin")}}>SIGN IN</Button>
             </Grid>
             <Grid item xs>
-              <Button onClick={() => auth.signOut()}>SIGN OUT</Button>
+              <Button onClick={() => firebase.signOut()}>SIGN OUT</Button>
             </Grid>
             <Grid item xs>
               <Button>INVITE LINK</Button>
@@ -65,19 +61,13 @@ const LandingPage = () => {
           </Grid>
           <Grid container spacing={3}>
             <Grid item xs>
-              <Button onClick={() => {
-                enqueueSnackbar("A message")
-              }}>Add snackbar</Button>
+              <Button onClick={() => {successMessage("Your rock")}}>SUCCESS MESSAGE</Button>
             </Grid>
             <Grid item xs>
-              <Button onClick={() => {
-                closeSnackbar()
-              }}>Close snackbasr</Button>
+              <Button onClick={() => {warningMessage("A warning")}}>Warning Message</Button>
             </Grid>
             <Grid item xs>
-              <Button onClick={() => {
-                enqueueSnackbar("A warning", {variant: 'warning'})
-              }}>Add warning</Button>
+              <Button onClick={() => {infoMessage("This is info")}}>Info Message</Button>
             </Grid>
           </Grid>
           <Grid container spacing={3}>
@@ -85,14 +75,10 @@ const LandingPage = () => {
               <Button onClick={addDoc}>Add Document</Button>
             </Grid>
             <Grid item xs>
-              <Button onClick={() => {
-                closeSnackbar()
-              }}>Something else</Button>
+              <Button >Something else</Button>
             </Grid>
             <Grid item xs>
-              <Button onClick={() => {
-                enqueueSnackbar("A warning", {variant: 'warning'})
-              }}>Last thin</Button>
+              <Button>Last thin</Button>
             </Grid>
           </Grid>
         </Paper>

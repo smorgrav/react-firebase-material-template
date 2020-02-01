@@ -16,14 +16,14 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v1
-    - name: Install and Buil
+    - name: Install and Build
       run: |
         yarn install
         yarn build
-    - name: Yarn Test
+    - name: Test
       run: |
-        yarn start &
-        sleep 120
+        yarn local &
+        curl --retry 10 --retry-delay 11 --retry-max-time 120 --max-time 8 --retry-connrefused localhost:3000 &&
         yarn test
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
@@ -45,6 +45,6 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
+          args: deploy
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
