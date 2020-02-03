@@ -11,8 +11,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ianwalter/puppeteer:2.0.0
     steps:
     - name: Checkout Code
       uses: actions/checkout@v1
@@ -20,11 +18,11 @@ jobs:
       run: |
         yarn install
         yarn build
-    - name: Test
-      run: |
-        yarn local &
-        curl --retry 10 --retry-delay 11 --retry-max-time 120 --max-time 8 --retry-connrefused localhost:3000 &&
-        yarn test
+    - name: Non Visual Tests
+      run: yarn test
+    - uses: ./ # Uses an action in the root directory
+    - name: Visual Tests
+      uses: actions/smorgrav/smorgrav/react-firebase-material-template@v1
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:
