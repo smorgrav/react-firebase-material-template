@@ -22,7 +22,7 @@ jobs:
       run: yarn test
     - uses: ./ # Uses an action in the root directory
     - name: Visual Tests
-      uses: actions/smorgrav/smorgrav/react-firebase-material-template@v1
+      uses: actions/smorgrav/react-firebase-material-template@v1
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:
