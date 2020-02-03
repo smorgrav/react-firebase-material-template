@@ -7,7 +7,7 @@
     "prod": "REACT_APP_BACKEND=prod react-scripts start",
     "dev": "REACT_APP_BACKEND=dev react-scripts start",
     "local": "firebase emulators:start & sleep 10 && REACT_APP_BACKEND=local react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=true react-scripts build",
     "test": "CI=true react-scripts test --testPathIgnorePatterns=.*.visual.test.js$",
     "visual": "CI=true react-scripts test visual.test.js --reporters default differencify-jest-reporter"
   },

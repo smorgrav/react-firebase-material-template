@@ -34,7 +34,6 @@ const successMessage = message => {
 };
 
 const restMessage = (response, prefix, code = 200) => {
-  let message = '';
 
   // Gracefully handle various types of rest responses input
   // Response can be a raw fetch request, an already decoded object or a plain string
