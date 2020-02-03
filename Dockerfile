@@ -37,4 +37,4 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
 ENV PATH="/root/.yarn/bin:${PATH}"
 
-CMD ["/bin/sh -c 'yarn local & curl --retry 10 --retry-delay 11 --retry-max-time 120 --max-time 8 --retry-connrefused localhost:3000 && yarn visual'"]
+ENTRYPOINT ["/bin/sh"]
