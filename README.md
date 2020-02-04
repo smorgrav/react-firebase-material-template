@@ -3,6 +3,7 @@ A pre-canned web app with battery included.
 This is basically the setup I found useful for my side projects.
 
 ![Continuous Integration](https://github.com/smorgrav/react-firebase-material-template/workflows/Continuous%20Integration/badge.svg)
+![Continuous Integration](https://github.com/smorgrav/react-firebase-material-template/workflows/Continuous%20Integration/badge.svg)
 
 ## Features
 

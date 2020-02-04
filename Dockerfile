@@ -34,7 +34,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 #
 # YARN (~8MB)
 #
+RUN touch .bashrc
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
-ENV PATH="/root/.yarn/bin:${PATH}"
 
-ENTRYPOINT ["/bin/sh"]
+ENV PATH="/root/.yarn/bin:${PATH}"
+ENTRYPOINT ["/bin/bash"]
