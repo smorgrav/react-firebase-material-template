@@ -13,18 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v1
-    - name: Install and Build
-      run: |
-        yarn install
-        yarn build
+      uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Install
+      run: yarn install
+    - name: Build
+      run: yarn build
     - name: Non Visual Tests
       run: yarn test
     - uses: ./ # Uses an action in the root directory
     - name: Visual Tests
       uses: smorgrav/react-firebase-material-template@master
       with:
-        args: /bin/echo hei
+        args: yarn local & curl --retry 10 --retry-delay 11 --retry-max-time 120 --max-time 8 --retry-connrefused localhost:3000 && yarn visual
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:
