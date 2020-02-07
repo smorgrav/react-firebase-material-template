@@ -52,19 +52,25 @@ describe('visual-sitemap', () => {
   test.each(sitemap)(
     '%s',
     async (name, url, selector, waitms, userOptions) => {
-      // TODO handle authenticated states - i.e login
       target = differencify.init({ chain: false });
       page = await target.newPage();
+      console.log("Page created");
       await page.setViewport({ width: 1600, height: 1200 });
+      console.log("Viewport ok");
       await page.goto(site + '/' + url, {
-        waitUntil: 'networkidle0',
+        waitUntil: 'load',
       });
+      console.log("Url loaded");
       if (selector) {
+        console.log("Wait for selector");
         await page.waitFor(selector, { timeout: 2000 });
       }
+      console.log("Wait %o", waitms);
       await page.waitFor(waitms);
+      console.log("Screenshot");
       const image = await page.screenshot();
       await page.close();
+      console.log("Compare");
       const result = await target.toMatchSnapshot(image);
       expect(result).toEqual(true);
     },

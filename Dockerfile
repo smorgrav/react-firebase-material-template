@@ -1,18 +1,13 @@
 #
 # JAVA needed for firebase emulators
 #
-FROM maven:3.6.3-jdk-11
+FROM openjdk:8-jdk-buster
 
 #
 # NODE JS and NPM (~120MB)
 #
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
 RUN apt-get install nodejs && apt-get clean
-
-#
-# FIREBASE (~61MB)
-#
-RUN npm install firebase-tools@7.12.1 -g
 
 #
 # CHROME DEV and PUPPETEER (~400MB)
@@ -37,5 +32,21 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 #
 RUN touch .bashrc
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
+ENV PATH=/root/.yarn/bin:$PATH
 
-ENTRYPOINT ["/bin/bash"]
+#
+# FIREBASE (~61MB)
+#
+ENV FIREBASE_TOOLS_VERSION=7.12.1
+RUN yarn global add firebase-tools@${FIREBASE_TOOLS_VERSION} && \
+    yarn cache clean && \
+    firebase -V && \
+    mkdir $HOME/.cache
+
+RUN firebase setup:emulators:database
+
+COPY visual_tests.sh .
+RUN ["chmod","+x","visual_tests.sh"]
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["./visual_tests.sh"]

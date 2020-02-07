@@ -28,7 +28,7 @@ jobs:
     - name: Visual Tests
       uses: smorgrav/react-firebase-material-template@master
       with:
-        args: yarn local & curl --retry 10 --retry-delay 11 --retry-max-time 120 --max-time 8 --retry-connrefused localhost:3000 && yarn visual
+        args: yarn local & sleep 120 && yarn visual
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:
