@@ -24,7 +24,6 @@ jobs:
       run: yarn build
     - name: Non Visual Tests
       run: yarn test
-    - uses: ./ # Uses an action in the root directory
     - name: Visual Tests
       uses: smorgrav/react-firebase-material-template@master
       with:
