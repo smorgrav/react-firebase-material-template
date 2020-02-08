@@ -27,7 +27,7 @@ jobs:
     - name: Visual Tests
       uses: smorgrav/react-firebase-material-template@master
       with:
-        args: yarn local & sleep 120 && yarn visual
+        args: "yarn local & sleep 120 && yarn visual"
     - name: Upload Artifacts
       uses: actions/upload-artifact@master
       with:
