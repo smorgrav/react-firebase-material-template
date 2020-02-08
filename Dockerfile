@@ -45,8 +45,4 @@ RUN yarn global add firebase-tools@${FIREBASE_TOOLS_VERSION} && \
 
 RUN firebase setup:emulators:database
 
-COPY visual_tests.sh .
-RUN ["chmod","+x","visual_tests.sh"]
-
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["./visual_tests.sh"]
