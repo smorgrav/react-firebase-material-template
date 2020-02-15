@@ -3,9 +3,7 @@
  * Semantic-ui has a message component that might become the same (some discussions in github issues about that).
  *
  * I'm anticipating that the underlying technology will change, so this component is
- * to encapsulate the current technology (react-toastify), apply defaults, styling for
- * the console application and expose an API for the rest of the application to use.
- *
+ * to encapsulate the current technology (react-toastify), apply defaults and styling.
  */
 import { toast } from 'react-toastify';
 import './messages.css';
@@ -26,7 +24,8 @@ const warningMessage = message => {
 };
 
 const errorMessage = message => {
-  toast.error(message);
+  const refined = typeof message === 'string' ? message : JSON.stringify(message);
+  toast.error(refined);
 };
 
 const successMessage = message => {

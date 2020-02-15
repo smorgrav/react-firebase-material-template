@@ -1,14 +1,14 @@
 import React from 'react';
-import {FirebaseProvider} from "./Firebase";
-import {ThemeProvider} from "./Theme";
-import {ErrorBoundary} from "./Errors";
-import {LandingPage} from "./LandingPage";
+import {FirebaseProvider} from "./firebase/Firebase";
+import {ThemeProvider} from "./shared/Theme";
+import {ErrorBoundary} from "./shared/Errors";
+import {LandingPage} from "./pages/LandingPage";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {Drawer, DrawerProvider} from "./Drawer";
+import {Drawer, DrawerProvider} from "./shared/Drawer";
 import {BrowserRouter} from "react-router-dom";
+import "./i18n";
 
 function App() {
-  console.log("Env: %o", process.env);
   return (
     <BrowserRouter>
       <ErrorBoundary>

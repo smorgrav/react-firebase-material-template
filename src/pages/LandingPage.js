@@ -3,13 +3,15 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import {DrawerContext} from "./Drawer";
-import {ThemeContext} from "./Theme";
-import {FirebaseContext, SignIn} from "./Firebase";
-import {UrlParamTags} from "./UrlParamTags";
+import {DrawerContext} from "../shared/Drawer";
+import {ThemeContext} from "../shared/Theme";
+import {FirebaseContext, LinkAccount, sendInvite, SignIn} from "../firebase/Firebase";
+import {UrlQueryAuto} from "../shared/UrlQueryAuto";
 import {useCollection} from 'react-firebase-hooks/firestore';
 import Box from "@material-ui/core/Box";
-import {infoMessage, successMessage, warningMessage} from "./Messages";
+import {infoMessage, successMessage, warningMessage} from "../shared/Messages";
+import {Link} from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const LandingPage = () => {
   const firebase = useContext(FirebaseContext);
@@ -17,6 +19,7 @@ const LandingPage = () => {
   const theme = useContext(ThemeContext);
   const [show, setShow] = useState("na");
   const [value, loading, error] = useCollection(firebase.db.collection('test'));
+  const { t } = useTranslation();
 
   const addDoc = () => {
     firebase.db.collection("test").doc("2").set({
@@ -34,8 +37,8 @@ const LandingPage = () => {
   return (
     <>
       <Container maxWidth="sm" style={{textAlign: 'center'}}>
-        <h2>Welcome {firebase.user ? firebase.user.displayName : "stranger!"}</h2>
-        <UrlParamTags/>
+        <h2>{t('WELCOME')} {firebase.user ? firebase.user.displayName : t('STRANGER') + "!"}</h2>
+        <UrlQueryAuto autoOptions={["something", "else"]} label={"your name"} placeholder={"even beter"}/>
         <Paper>
           <Grid container spacing={3}>
             <Grid item xs>
@@ -75,10 +78,21 @@ const LandingPage = () => {
               <Button onClick={addDoc}>Add Document</Button>
             </Grid>
             <Grid item xs>
-              <Button >Something else</Button>
+              <Button onClick={() => sendInvite("isak@smorgrav.org")}>Invite isak</Button>
             </Grid>
             <Grid item xs>
-              <Button>Last thin</Button>
+              <Link to={"/something"}>Navigate </Link>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs>
+              <Button onClick={() => setShow("link")}>Link Account</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={() => sendInvite("isak@smorgrav.org")}>Invite isak</Button>
+            </Grid>
+            <Grid item xs>
+              <Link to={"/something"}>Navigate </Link>
             </Grid>
           </Grid>
         </Paper>
@@ -99,6 +113,7 @@ const LandingPage = () => {
           </span>
           )}
           {show === "signin" ? <SignIn/> : null}
+          {show === "link" ? <LinkAccount/> : null}
         </Container>
       </Box>
     </>
