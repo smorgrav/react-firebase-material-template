@@ -5,13 +5,14 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import {DrawerContext} from "../shared/Drawer";
 import {ThemeContext} from "../shared/Theme";
-import {FirebaseContext, LinkAccount, sendInvite, SignIn} from "../firebase/Firebase";
+import {FirebaseContext, sendInvite, signOut} from "../firebase/Firebase";
 import {UrlQueryAuto} from "../shared/UrlQueryAuto";
 import {useCollection} from 'react-firebase-hooks/firestore';
 import Box from "@material-ui/core/Box";
 import {infoMessage, successMessage, warningMessage} from "../shared/Messages";
 import {Link} from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {AuthDialog} from "../firebase/AuthDialog";
 
 const LandingPage = () => {
   const firebase = useContext(FirebaseContext);
@@ -37,56 +38,56 @@ const LandingPage = () => {
   return (
     <>
       <Container maxWidth="sm" style={{textAlign: 'center'}}>
-        <h2>{t('WELCOME')} {firebase.user ? firebase.user.displayName : t('STRANGER') + "!"}</h2>
-        <UrlQueryAuto autoOptions={["something", "else"]} label={"your name"} placeholder={"even beter"}/>
+        <h2>{t('Welcome')} {firebase.user ? firebase.user.displayName : t('Stranger') + "!"}</h2>
+        <UrlQueryAuto autoOptions={["Hard rock", "Jazz"]} label={"search"} placeholder={"E.g artist~adele"}/>
         <Paper>
           <Grid container spacing={3}>
             <Grid item xs>
-              <Button onClick={() => {setShow("signin")}}>SIGN IN</Button>
+              <Button onClick={() => {setShow("signin")}}>Sign in</Button>
             </Grid>
             <Grid item xs>
-              <Button onClick={() => firebase.signOut()}>SIGN OUT</Button>
+              <Button onClick={() => signOut()}>Sign out</Button>
             </Grid>
             <Grid item xs>
-              <Button>INVITE LINK</Button>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs>
-              <Button onClick={drawer.toggleDrawer('left')}>TOGGLE LEFT DRAWER</Button>
-            </Grid>
-            <Grid item xs>
-              <Button onClick={drawer.toggleDrawer('right')}>TOGGLE RIGHT DRAWER</Button>
-            </Grid>
-            <Grid item xs>
-              <Button onClick={() => theme.toggle()}>TOGGLE THEME</Button>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs>
-              <Button onClick={() => {successMessage("Your rock")}}>SUCCESS MESSAGE</Button>
-            </Grid>
-            <Grid item xs>
-              <Button onClick={() => {warningMessage("A warning")}}>Warning Message</Button>
-            </Grid>
-            <Grid item xs>
-              <Button onClick={() => {infoMessage("This is info")}}>Info Message</Button>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs>
-              <Button onClick={addDoc}>Add Document</Button>
-            </Grid>
-            <Grid item xs>
-              <Button onClick={() => sendInvite("isak@smorgrav.org")}>Invite isak</Button>
-            </Grid>
-            <Grid item xs>
-              <Link to={"/something"}>Navigate </Link>
+              <Button onClick={() => setShow('rest')}>Reset password</Button>
             </Grid>
           </Grid>
           <Grid container spacing={3}>
             <Grid item xs>
               <Button onClick={() => setShow("link")}>Link Account</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={() => sendInvite("isak@smorgrav.org")}>Invite isak</Button>
+            </Grid>
+            <Grid item xs>
+              <Link to={"/something"}>Navigate</Link>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs>
+              <Button onClick={drawer.toggleDrawer('left')}>Toggle left drawer</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={drawer.toggleDrawer('right')}>Toggle right drawer</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={() => theme.toggle()}>Toggle theme</Button>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs>
+              <Button onClick={() => {successMessage("You won!")}}>Success message</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={() => {warningMessage("Watch out")}}>Warning message</Button>
+            </Grid>
+            <Grid item xs>
+              <Button onClick={() => {infoMessage("Climate change is real")}}>Info message</Button>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs>
+              <Button onClick={addDoc}>Add Document</Button>
             </Grid>
             <Grid item xs>
               <Button onClick={() => sendInvite("isak@smorgrav.org")}>Invite isak</Button>
@@ -112,8 +113,7 @@ const LandingPage = () => {
               ))}
           </span>
           )}
-          {show === "signin" ? <SignIn/> : null}
-          {show === "link" ? <LinkAccount/> : null}
+          {show !== "na" ? <AuthDialog close={() => setShow('na')} orgIntent={show}/> : null}
         </Container>
       </Box>
     </>

@@ -1,14 +1,14 @@
 const resources = {
   en: {
     translation: {
-      "WELCOME": "Welcome to this template",
-      "STRANGER": "stranger"
+      "Welcome": "Welcome to this template",
+      "Stranger": "stranger"
     }
   },
   no: {
     translation: {
-      "WELCOME": "Velkommen til denne malen",
-      "STRANGER": "gjest"
+      "Welcome": "Velkommen til denne malen",
+      "Stranger": "gjest"
     }
   }
 };

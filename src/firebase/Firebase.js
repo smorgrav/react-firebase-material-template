@@ -58,17 +58,12 @@ const FirebaseProvider = ({children}) => {
     return !!user;
   };
 
-  const signOut = async () => {
-    return firebase.auth().signOut();
-  };
-
   return (
     <FirebaseContext.Provider value={{
       authenticated,
       user,
       db: app.firestore(),
       auth: firebase.auth,
-      signOut,
     }}>
       {children}
     </FirebaseContext.Provider>
@@ -79,6 +74,10 @@ const actionCodeSettings = {
   url: 'http://localhost:3000/invite',
   // This must be true.
   handleCodeInApp: true,
+};
+
+const signOut = async () => {
+  return firebase.auth().signOut();
 };
 
 const sendInvite = (email) => {
@@ -92,30 +91,14 @@ const sendInvite = (email) => {
 
 const signInIfEmailLink = () => {
   console.log("Checking if url is a signin link");
-  // Confirm the link is a sign-in with email link.
   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-    console.log("It is!");
-    // Additional state parameters can also be passed via URL.
-    // This can be used to continue the user's intended action before triggering
-    // the sign-in operation.
-    // Get the email if available. This should be available if the user completes
-    // the flow on the same device where they started it.
     let email = window.localStorage.getItem('emailForSignIn');
     if (!email) {
-      // User opened the link on a different device. To prevent session fixation
-      // attacks, ask the user to provide the associated email again. For example:
       email = window.prompt('Please provide your email for confirmation');
     }
-    // The client SDK will parse the code from the link for you.
     firebase.auth().signInWithEmailLink(email, window.location.href)
       .then(function (result) {
-        // Clear email from storage.
         window.localStorage.removeItem('emailForSignIn');
-        // You can access the new user via result.user
-        // Additional user info profile not available via:
-        // result.additionalUserInfo.profile == null
-        // You can check if the user is new or existing:
-        // result.additionalUserInfo.isNewUser
         successMessage("Authenticated with link");
       })
       .catch(errorMessage);
@@ -128,8 +111,9 @@ const linkWithGoogle = () => {
   }).catch(errorMessage);
 };
 
-const linkWithEmail = () => {
-  firebase.auth().currentUser.linkWithPopup(new firebase.auth.EmailAuthProvider()).then(result => {
+const linkWithEmail = (email, password) => {
+  const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+  firebase.auth().currentUser.linkWithCredential(credential).then(result => {
     successMessage("Account linked to" + result.user.uid);
   }).catch(errorMessage);
 };
@@ -151,10 +135,12 @@ const resetPassword = email => {
 
 const signUpEmail = (email, name, password) => {
   if (name.length < 4) {
-    warningMessage("Name must be more than 4 characters long");
+    warningMessage("Name must be more than 3 characters long");
   } else {
     this.auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {successMessage("Hello " + user.displayName)})
+      .then(user => {
+        successMessage("Hello " + user.displayName)
+      })
       .catch(errorMessage)
   }
 };
@@ -163,4 +149,16 @@ const signInCustom = token => {
   this.auth.signInWithCustomToken(token).catch(errorMessage);
 };
 
-export {FirebaseContext, FirebaseProvider, sendInvite}
+export {
+  FirebaseContext,
+  FirebaseProvider,
+  signOut,
+  sendInvite,
+  signInCustom,
+  signInEmail,
+  signInGoogle,
+  resetPassword,
+  signUpEmail,
+  linkWithEmail,
+  linkWithGoogle
+}
