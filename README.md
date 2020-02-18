@@ -1,9 +1,10 @@
 A pre-canned web app with batteries included.
  
 This is basically the setup I found useful for my side projects. It's a rather fat and opinionated set 
-of technologies for a one size fit all singe page application. 
+of technologies for a one size fit all singe page application. It serves both as a template and a reference project for
+a real world configuration and usage of these technologies.  
 
-I think the offline visual testing with emulated firebase is quite clever - a lot of the other stuff - I'm not so sure about. 
+Off the bat, I think the offline visual testing with emulated firebase is quite clever. 
 
 ![Continuous Integration](https://github.com/smorgrav/react-firebase-material-template/workflows/Continuous%20Integration/badge.svg)
 
@@ -20,9 +21,16 @@ I think the offline visual testing with emulated firebase is quite clever - a lo
 * Authentication context backed by firebase
 * Invite user and Link account flow
 * Internationalization
+* ESLint and automatic code formatting
 
 ![Image of LandingPage](doc/ReFiMaLandingPage.png)
-   
+
+# How to adopt this template
+
+
+
+# Details
+
 ## Head
    * https://realfavicongenerator.net/
      
@@ -36,6 +44,9 @@ yarn local && sleep 120 & yarn visual
       
 ## Messages
 Communicating stuff to the user is arguably the most important thing for a web application.
+
+## ESLint and Prettier
+Configured straight out of the CRA documentation https://create-react-app.dev/docs/setting-up-your-editor/
 
 # Feedback
 Please! - that would be fun.  

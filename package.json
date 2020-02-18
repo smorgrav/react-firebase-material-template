@@ -26,6 +26,16 @@
       "last 1 safari version"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
     "@firebase/testing": "^0.16.7",
     "@material-ui/core": "^4.9.0",
@@ -36,8 +46,11 @@
     "differencify-jest-reporter": "^0.0.3",
     "firebase": "^6.2.4",
     "firebase-tools": "^7.12.1",
+    "husky": "^4.2.3",
     "i18next": "^19.1.0",
     "i18next-browser-languagedetector": "^4.0.1",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
     "query-string": "^6.10.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
