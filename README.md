@@ -27,8 +27,6 @@ Off the bat, I think the offline visual testing with emulated firebase is quite 
 
 # How to adopt this template
 
-
-
 # Details
 
 ## Head
@@ -48,5 +46,7 @@ Communicating stuff to the user is arguably the most important thing for a web a
 ## ESLint and Prettier
 Configured straight out of the CRA documentation https://create-react-app.dev/docs/setting-up-your-editor/
 
+I like to have one consistent style and enforcing this is the only way to do it. No more tabs vs spaces discussion. 
+
 # Feedback
-Please! - that would be fun.  
+Please! - that would be fun. 
