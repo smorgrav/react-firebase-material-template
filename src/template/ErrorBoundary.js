@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Top level error boundary.
@@ -28,15 +28,13 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     // You can also log the error to an error reporting service
-    console.log('Error: %o Info: %o', error, errorInfo);
+    console.log("Error: %o Info: %o", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return (
-        <h2>Uppps</h2>
-      );
+      return <h2>Uppps</h2>;
     }
 
     return this.props.children;

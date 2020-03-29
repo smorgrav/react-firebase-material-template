@@ -5,8 +5,8 @@
  * I'm anticipating that the underlying technology will change, so this component is
  * to encapsulate the current technology (react-toastify), apply defaults and styling.
  */
-import { toast } from 'react-toastify';
-import './messages.css';
+import { toast } from "react-toastify";
+import "src/template/notifications.css";
 
 // See https://www.npmjs.com/package/react-toastify#api
 toast.configure({
@@ -15,30 +15,30 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const infoMessage = message => {
+const infoMessage = (message) => {
   toast.info(message);
 };
 
-const warningMessage = message => {
+const warningMessage = (message) => {
   toast.warn(message);
 };
 
-const errorMessage = message => {
-  const refined = typeof message === 'string' ? message : JSON.stringify(message);
+const errorMessage = (message) => {
+  const refined =
+    typeof message === "string" ? message : JSON.stringify(message);
   toast.error(refined);
 };
 
-const successMessage = message => {
+const successMessage = (message) => {
   toast.success(message);
 };
 
 const restMessage = (response, prefix, code = 200) => {
-
   // Gracefully handle various types of rest responses input
   // Response can be a raw fetch request, an already decoded object or a plain string
-  if (typeof response === 'object') {
-    if (typeof response.text === 'function') {
-      Promise.resolve(response.text()).then(text => {
+  if (typeof response === "object") {
+    if (typeof response.text === "function") {
+      Promise.resolve(response.text()).then((text) => {
         restMessageInner(code, text, prefix);
       });
     } else {
@@ -48,13 +48,13 @@ const restMessage = (response, prefix, code = 200) => {
         prefix
       );
     }
-  } else if (typeof response === 'string') {
+  } else if (typeof response === "string") {
     restMessageInner(code, response, prefix);
   }
 };
 
 const restMessageInner = (code, message, prefix) => {
-  console.log('Got message: %o', message);
+  console.log("Got message: %o", message);
 
   // Trunk long messages
   if (message.length > 200) {

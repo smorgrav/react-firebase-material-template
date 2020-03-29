@@ -1,31 +1,36 @@
-import React, {useState} from "react";
-import {useTranslation} from "react-i18next";
-import {linkWithEmail, resetPassword, signInEmail, signUpEmail} from "./Firebase";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import {
+  linkWithEmail,
+  resetPassword,
+  signInEmail,
+  signUpEmail,
+} from "src/firebase/FirebaseProvider";
 import TextField from "@material-ui/core/TextField/TextField";
 import Box from "@material-ui/core/Box/Box";
 import Button from "@material-ui/core/Button/Button";
-import {makeStyles} from "@material-ui/core/styles";
-import {blue} from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: blue[100],
     color: blue[600],
   },
   logo: {
-    margin: 'auto',
+    margin: "auto",
   },
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'column'
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
   },
   button: {
     margin: theme.spacing(1),
-  }
+  },
 }));
 
-const EmailForm = ({mode, action, close}) => {
+const EmailForm = ({ mode, action, close }) => {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,19 +39,19 @@ const EmailForm = ({mode, action, close}) => {
 
   const actionFunction = () => {
     switch (mode) {
-      case 'signin':
+      case "signin":
         signInEmail(email, password);
         close();
         break;
-      case 'reset':
+      case "reset":
         resetPassword(email);
         close();
         break;
-      case 'signup':
+      case "signup":
         signUpEmail(email, name, password);
         close();
         break;
-      case 'link':
+      case "link":
         linkWithEmail(email, password);
         close();
         break;
@@ -57,13 +62,13 @@ const EmailForm = ({mode, action, close}) => {
 
   const buttonText = () => {
     switch (mode) {
-      case 'link':
+      case "link":
         return t("Link");
-      case 'signin':
+      case "signin":
         return t("Signin");
-      case 'reset':
+      case "reset":
         return t("Reset");
-      case 'signup':
+      case "signup":
         return t("Signup");
       default:
         throw Error("Unknown mode: " + mode);
@@ -80,27 +85,37 @@ const EmailForm = ({mode, action, close}) => {
         }}
         margin="normal"
       />
-      {mode !== 'reset'
-        ? <TextField
+      {mode !== "reset" ? (
+        <TextField
           label={t("Password")}
           value={password}
           onChange={(event) => {
             setPassword(event.target.value);
           }}
-          margin="normal"/>
-        : null}
-      {mode === 'signup'
-        ? <TextField
+          margin="normal"
+        />
+      ) : null}
+      {mode === "signup" ? (
+        <TextField
           label={t("Name")}
           value={name}
           onChange={(event) => {
             setName(event.target.value);
           }}
-          margin="normal"/>
-        : null}
-      < Box mt={2}/>
-      <Button variant="contained" color="primary" className={classes.button} onClick={actionFunction}>{buttonText()}</Button>
-    </form>)
+          margin="normal"
+        />
+      ) : null}
+      <Box mt={2} />
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.button}
+        onClick={actionFunction}
+      >
+        {buttonText()}
+      </Button>
+    </form>
+  );
 };
 
-export {EmailForm}
+export { EmailForm };

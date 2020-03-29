@@ -3,17 +3,21 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import { DrawerContext } from "../shared/Drawer";
-import { ThemeContext } from "../shared/Theme";
-import { FirebaseContext, sendInvite, signOut } from "../firebase/Firebase";
-import { UrlQueryAuto } from "../shared/UrlQueryAuto";
+import { DrawerContext } from "src/template/AppDrawer";
+import { ThemeContext } from "src/template/ThemeProvider";
+import {
+  FirebaseContext,
+  sendInvite,
+  signOut,
+} from "src/firebase/FirebaseProvider";
+import { UrlQueryAuto } from "../template/UrlQueryAuto";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Box from "@material-ui/core/Box";
 import {
   infoMessage,
   successMessage,
-  warningMessage
-} from "../shared/Messages";
+  warningMessage,
+} from "src/template/Notifications";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AuthDialog } from "../firebase/AuthDialog";
@@ -32,12 +36,12 @@ const LandingPage = () => {
       .doc("2")
       .set({
         name: "Number Two",
-        title: "Captain"
+        title: "Captain",
       })
-      .then(function() {
+      .then(function () {
         console.log("Document successfully written!");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error("Error writing document: ", error);
       });
   };
@@ -152,7 +156,7 @@ const LandingPage = () => {
           {value && (
             <span>
               Collection:{" "}
-              {value.docs.map(doc => (
+              {value.docs.map((doc) => (
                 <React.Fragment key={doc.id}>
                   {JSON.stringify(doc.data())},{" "}
                 </React.Fragment>

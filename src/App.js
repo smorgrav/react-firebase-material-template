@@ -1,32 +1,42 @@
-import React from 'react';
-import {FirebaseProvider} from "./firebase/Firebase";
-import {ThemeProvider} from "./shared/Theme";
-import {ErrorBoundary} from "./shared/Errors";
-import {LandingPage} from "./pages/LandingPage";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {Drawer, DrawerProvider} from "./shared/Drawer";
-import {BrowserRouter} from "react-router-dom";
-import "./i18n";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { FirebaseProvider } from "src/firebase/FirebaseProvider";
+import { UserProvider } from "src/firebase/UserProvider";
+import { AppAuthenticated } from "src/template/AppAuthenticated";
+import { AppDrawer, DrawerProvider } from "src/template/AppDrawer";
+import { AppSettingsProvider } from "src/template/AppSettingsProvider";
+import { AppToolbar } from "src/template/AppToolbar";
+import { AppUnauthenticated } from "src/template/AppUnAuthenticated";
+import { ErrorBoundary } from "src/template/ErrorBoundary";
+import { ThemeProvider } from "src/template/ThemeProvider";
+import "src/i18n";
 
 function App() {
   return (
     <BrowserRouter>
       <ErrorBoundary>
-        <ThemeProvider>
-          <CssBaseline>
-            <FirebaseProvider>
-              <DrawerProvider>
-                <LandingPage/>
-                <Drawer anchor='left'>
-                  <h2>Left drawer</h2>
-                </Drawer>
-                <Drawer anchor='right'>
-                  <h2>Right drawer</h2>
-                </Drawer>
-              </DrawerProvider>
-            </FirebaseProvider>
-          </CssBaseline>
-        </ThemeProvider>
+        <AppSettingsProvider>
+          <ThemeProvider>
+            <CssBaseline>
+              <FirebaseProvider>
+                <UserProvider>
+                  <DrawerProvider>
+                    <AppToolbar />
+                    <AppDrawer anchor="left">
+                      <h2>Left drawer</h2>
+                    </AppDrawer>
+                    <AppDrawer anchor="right">
+                      <h2>Right drawer</h2>
+                    </AppDrawer>
+                    <AppAuthenticated />
+                    <AppUnauthenticated />
+                  </DrawerProvider>
+                </UserProvider>
+              </FirebaseProvider>
+            </CssBaseline>
+          </ThemeProvider>
+        </AppSettingsProvider>
       </ErrorBoundary>
     </BrowserRouter>
   );
